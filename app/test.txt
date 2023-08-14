@@ -1,0 +1,38 @@
+from azure.core.credentials import AzureKeyCredential
+from azure.search.documents import SearchClient
+
+search_endpoint = 'https://d5d-cogsearch.search.windows.net'
+search_key = 'OYKBKLWyJNeCwlQ5unYw80K9CKJPsfzTIa09eXJR9uAzSeBwUrFP'
+search_index = 'margies-index'
+
+
+azure_credential = AzureKeyCredential(search_key)
+search_client = SearchClient(search_endpoint, search_index, azure_credential)
+
+search_text = 'London hotel'
+filter_by = None
+sort_order = 'search.score()'
+results =  search_client.search(search_text,
+                                        search_mode="all",
+                                        include_total_count=True,
+                                        filter=filter_by,
+                                        order_by=sort_order,
+                                        facets=['metadata_author'],
+                                        highlight_fields='merged_content-3,imageCaption-3',
+                                        select = "metadata_storage_name,metadata_author,metadata_storage_size,metadata_storage_last_modified,language,merged_content,keyphrases,locations,imageTags,imageCaption")
+
+
+{'metadata_storage_last_modified': '2023-08-14T08:26:30Z', 
+'metadata_author': 'Reviewer', 
+'language': 'en', 
+'imageCaption': [], 
+'metadata_storage_size': 110813, 
+'metadata_storage_name': '201827.pdf', 
+'imageTags': [], 
+'locations': ['The Kensington Hotel', 'London', 'UK', 'hotel', 'lobby', 'corridor', 'room', 'twin room', 'corridors', 'TINY room', 'family room', 'top'], 
+'merged_content': '\nCan’t believe the place is still in business! \n\nThe Kensington Hotel, London, UK \n\n10/10/2018 \n\nMy Girlfriend and I regrettably choose the this hotel without checking up on trip advisor first! As \n\nanother reviewer mentioned it is clear the owner invested heavily on the lobby area and with good \n\nreason, to give you this false illusion of things to come.....Note reception will insist on taking the full \n\npayment for your stay prior to check out. Once we had crossed the point of no return we were \n\ngreeted by a damp musty smell in the corridor (not a good start) upon entering our room further \n\ndisappointments. TV hanging off the wall supported by a hand towel... disgusting rotting smell in the \n\ntoilet, cupboard with leg missing, rusted ancient balcony doors unsecured and lumpy bed.Reception \n\nnow offered a twin room on the lower level. EVEN WORSE. The lower level corridors smelt of \n\ncannabis our second TINY room offered dirty tea tray, tasteless plastic bin with rubbish still in, two \n\nrat poisoning kits on display, used cotton buds/rubbish swept under the beds again.Exhausted! \n\nreception upgraded us to the family room (top floor) Basic, no hot water and shower rail fell off on \n\nmy foot Breakfast was awful AVOID AVOID AVOID! \n\nReviewer: Maryellen Ellis \n\n\n', 
+'keyphrases': ['damp musty smell', 'disgusting rotting smell', 'ancient balcony doors', 'dirty tea tray', 'tasteless plastic bin', 'AVOID AVOID AVOID', 'The Kensington Hotel', 'lower level corridors', 'second TINY room', 'trip advisor', 'lobby area', 'good reason', 'false illusion', 'good start', 'hand towel', 'lumpy bed', 'twin room', 'poisoning kits', 'cotton buds/rubbish', 'family room', 'top floor', 'hot water', 'shower rail', 'foot Breakfast', 'Maryellen Ellis', 'Note reception', 'place', 'business', 'London', 'UK', 'Girlfriend', 'reviewer', 'owner', 'things', 'full', 'payment', 'stay', 'point', 'return', 'TV', 'wall', 'toilet', 'cupboard', 'leg', 'WORSE', 'cannabis', 'display', 'beds'], 
+'@search.score': 4.160451, 
+'@search.reranker_score': None, 
+'@search.highlights': {'merged_content': ['The Kensington <em>Hotel</em>, <em>London</em>, UK \n\n10/10/2018 \n\nMy Girlfriend and I regrettably choose the this <em>hotel</em> without checking up on trip advisor first!']}, 
+'@search.captions': None}

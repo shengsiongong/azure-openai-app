@@ -5,7 +5,7 @@ import openai
 from azure.search.documents import SearchClient
 # from azure.search.documents.models import QueryType
 from approaches.approach import Approach
-from text import nonewlines
+from app.backend.utils import nonewlines
 
 from core.messagebuilder import MessageBuilder
 from core.modelhelper import get_token_limit
@@ -145,6 +145,8 @@ If you cannot generate a search query, return just the number 0.
         # if use_semantic_captions:
         #     results = [doc[self.sourcepage_field] + ": " + nonewlines(" . ".join([c.text for c in doc['@search.captions']])) for doc in r]
         # else:
+
+        # should be list of string with format "<sourcepage>: <content>"
         results = [doc[self.sourcepage_field] + ": " + nonewlines(doc[self.content_field]) for doc in r]
 
         content = "\n".join(results)

@@ -7,9 +7,9 @@ import openai
 from flask import Flask, request, jsonify, send_file, abort
 from azure.identity import DefaultAzureCredential
 from azure.search.documents import SearchClient
-from approaches.retrievethenread import RetrieveThenReadApproach
-from approaches.readretrieveread import ReadRetrieveReadApproach
-from approaches.readdecomposeask import ReadDecomposeAsk
+# from approaches.retrievethenread import RetrieveThenReadApproach
+# from approaches.readretrieveread import ReadRetrieveReadApproach
+# from approaches.readdecomposeask import ReadDecomposeAsk
 from approaches.chatreadretrieveread import ChatReadRetrieveReadApproach
 from azure.storage.blob import BlobServiceClient
 
